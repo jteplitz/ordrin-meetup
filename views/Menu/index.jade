@@ -1,5 +1,6 @@
 // really need to make a block for stylesheets
 link(rel="stylesheet", href="/stylesheets/menu.css")
+script(type="text/javascript", src="/javascripts/menu.js")
 
 h1 #{title}
 
@@ -11,4 +12,32 @@ ul#menuList
       ul.itemList.menu.main-menu
         each item in category.children
           li.mi(data-listener="menuItem", data-miid="#{item.id}")
-            p.name(data-listener="menuItem") #{item.name}
+            p.name #{item.name}
+            p.priceContainer
+              span.price #{item.price}
+            span.menuItemDescription.hidden #{item.descrip}
+            if item.children
+              ul.optionCategoryList.hidden
+                each optionCategory in item.children
+                  li.optionCategory(data-mogid="#{optionCategory.id}")
+                    span.header #{optionCategory.name}
+                    ul.optionList.menu
+                      each option in optionCategory.children
+                        li.option(data-moid="#{option.id}") 
+                          input.optionCheck(type="checkbox", data-listener="optionCheckbox")
+                          p #{option.name}
+                          span.price #{option.price}
+                    .clear
+
+#optionsDialog.modal.hidden
+  .modal-header
+    button.close(data-dismiss="modal", type="button") x
+    h3#optionsTitle
+    p#itemPrice
+  .modal-body
+    p#itemDescription
+    #options
+    
+  .modal-footer
+    a.btn(data-dismiss="modal") Close
+    a.btn.btn-primary#addItem Add to tray

@@ -17,7 +17,7 @@
     ordrin.restaurant.getDetails(req.params.rid, function(err, data){
       if (err){
         console.log("fuck", err);
-        next(500, err);
+        next(500, err, data);
         return;
       }
       var params = _.extend({title: data.name}, data);
