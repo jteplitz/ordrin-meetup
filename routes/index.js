@@ -2,20 +2,20 @@
   "use strict";
 
   var routes = {
-    root  : require("./Root.js"),
-    menu  : require("./Menu.js"),
-    event : require("./Event.js"),
-    setupEvent: require("./SetupEvent.js"),
-    dwolla  : require("./Dwolla.js")
+    root    : require("./Root.js"),
+    menu    : require("./Menu.js"),
+    event   : require("./Event.js"),
+    dwolla  : require("./Dwolla.js"),
+    pay     : require("./Pay.js")
   };
 
   var routeList = [
-    ["/",                      routes.root,           ["get"         ]],
+    ["/",                routes.root,           ["get"]],
     ["/order/:eid",            routes.menu,           ["get"         ]],
     ["/menu/:rid/event/:eid",  routes.setupEvent,     ["get",  "post"]],
-
-    ["/event/:eid",            routes.event,          ["get"         ]],
-    ["/dwolla",                routes.dwolla,         ["get"]]
+    ["/event/:eid",      routes.event,          ["get"]],
+    ["/dwolla",          routes.dwolla,         ["get"]],
+    ["/pay/:eid",        routes.pay,            ["get"]]
   ];
 
   exports.list = routeList;
