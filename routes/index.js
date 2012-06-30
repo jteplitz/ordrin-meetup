@@ -7,7 +7,8 @@
     event   : require("./Event.js"),
     dwolla  : require("./Dwolla.js"),
     setupEvent: require("./SetupEvent"),
-    pay     : require("./Pay.js")
+    pay     : require("./Pay.js"),
+    placeOrder : require("./PlaceOrder.js")
   };
 
   var routeList = [
@@ -17,6 +18,7 @@
     ["/menu/:rid/event/:eid",  routes.setupEvent,     ["get",  "post"]],
     ["/event/:eid",            routes.event,          ["get"]],
     ["/dwolla",                routes.dwolla,         ["get"]],
+    ["/placeorder/:eid",       routes.placeOrder,     ["get", "post"]]
   ];
 
   exports.list = routeList;

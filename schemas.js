@@ -15,7 +15,7 @@
   var Meetup = new Schema({
     meetup_id: String,
     name: String,
-    url: String,
+    event_url: String,
     rid: Number,
     hostEmail: String
   });

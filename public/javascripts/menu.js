@@ -70,7 +70,8 @@
     currentItem = {
       id: $(this).attr("data-miid"),
       options: [],
-      price: price
+      price: price,
+      quantity: 1
     }
 
 
