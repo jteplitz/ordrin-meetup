@@ -1,0 +1,10 @@
+// really need to make a block for stylesheets
+link(rel="stylesheet", href="/stylesheets/style.css")
+
+h1 #{title}
+a(href =event_url) Event Link
+
+ul#menuList
+  each restaurant in restaurants
+    li 
+      <a href="/menu/#{restaurant.id}"> #{restaurant.na} </a>
