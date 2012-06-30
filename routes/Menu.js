@@ -16,13 +16,20 @@
       console.log(err,req.params.eid,  meetup);
 
       ordrin.restaurant.getDetails(meetup.rid, function(err, data){
-        if (err){
+        if (err && !JSON.parse(data)){
           console.log("fuck", err);
           next(500, err, data);
           return;
+        }else if (typeof data === "String"){
+          data = JSON.parse(data);
         }
-        var params = _.extend({title: data.name, ordering: true}, data);
-        console.log(params);
+        var params = _.extend({
+          title: data.name, 
+          ordering: true,
+          event_url: meetup.url,
+          event_name: meetup.name,
+          header: true
+        }, data);
         res.render("Menu/index.jade", params);
       });
     });

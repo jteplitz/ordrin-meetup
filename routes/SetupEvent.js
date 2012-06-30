@@ -9,26 +9,42 @@
 
   _handlePost   = function(req, res, next){
     var meetup = new req._schemas.Meetup({
-      meetup_id: req.params.eid,
-      rid      : req.params.rid
+      meetup_id : req.params.eid,
+      rid       : req.params.rid,
+      name      : req.session.meetup.name,
+      event_url : req.session.meetup.event_url
     });
     meetup.save(function(err){
       if (err){
         console.log("db error");
         return next(500);
       }else{
-        console.log("Success!");
+        var params = {
+          title     : "Success", 
+          event_name: req.session.meetup.name,
+          event_url : req.session.meetup.event_url,
+          eventId   : req.params.eid,
+          restaurantName: req.session.restaurantName,
+          header: true
+        };
+        res.render("setupEvent/success.jade", params);
       }
     });
   }
 
   
   _handleGet    = function(req, res, next){
-    console.log("get");
     var eid = req.params.eid;
 
     req._ordrin.restaurant.getDetails(req.params.rid, function(err, data){
-      var params = _.extend({title: data.name, ordering: false}, data);
+      req.session.restaurantName = data.name;
+      var params = _.extend({
+        title: data.name, 
+        ordering: false,
+        event_name: req.session.meetup.name,
+        event_url: req.session.meetup.event_url,
+        header: true
+      }, data);
       res.render("Menu/index.jade", params);
     });
   }

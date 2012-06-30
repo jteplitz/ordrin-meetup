@@ -28,7 +28,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: 'your secret here' }));
+  app.use(express.session({ secret: config.get("secret") }));
   app.use(function(req, res, next){
     req._schemas = schemas;
     req._ordrin  = ordrin;

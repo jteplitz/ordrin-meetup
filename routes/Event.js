@@ -20,7 +20,7 @@
 
     options.path += eid + "?key=" + config.get("meetup_api_key") + "&sign=true";
     console.log(options);
-    var req = https.request(options, function(resp) {
+    var meetupReq = https.request(options, function(resp) {
       params = {};
 
       if(resp.statusCode > 400) {
@@ -28,7 +28,20 @@
       } else {
         resp.on('data', function(d) {
           eventInfo = JSON.parse(d);
-          params = _.extend({title: eventInfo.name, eventId: eid}, eventInfo);
+          params = _.extend({
+            title: eventInfo.name, 
+            eventId: eid, 
+            event_name: eventInfo.name,
+            event_url: eventInfo.event_url,
+            header: true
+           }, eventInfo);
+
+          // add stuff to session for later. Sorry Felix
+          req.session.meetup = {
+            name: eventInfo.name,
+            event_url: eventInfo.event_url
+          };
+
           var timestamp = (parseInt(eventInfo.time) + parseInt(eventInfo.utc_offset));
           var dateTime = new Date(timestamp);
           console.log(dateTime);
@@ -40,7 +53,7 @@
         });
       }
     });
-    req.end();
+    meetupReq.end();
     
     /*ordrin.restaurant.getDetails(req.params.rid, function(err, data){
       if (err){

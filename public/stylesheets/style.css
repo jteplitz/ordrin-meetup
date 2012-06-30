@@ -10,6 +10,13 @@ body {
 a {
   color: #00B7FF;
 }
+.header a{
+  color: gray;
+}
+
+.header{
+  margin-bottom: 20px;
+}
 
 .hidden{
   display: none;

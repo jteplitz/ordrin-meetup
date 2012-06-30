@@ -11,4 +11,11 @@ html
     script(type="text/javascript", src="/javascripts/bootstrap.min.js")
   body
     .container
+      if header
+        .header
+          img(src="/img/logo_header.png", alt="Meetup and Chow Down")
+          br
+          h1
+            | Your Meetup: 
+            a(href="#{event_url}") #{event_name}
       != body
