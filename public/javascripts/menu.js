@@ -1,29 +1,60 @@
 (function(){
   "use strict";
 
-  var currentItem = {};
+  var currentItem = {}, order = [];
 
   $(document).ready(function(){
     // click listeners
     init();
     $("[data-listener]=menuItem").click(menuItemClicked);
     $("#addItem").click(addCurrentItem);
+    $("#placeOrder").click(placeOrder);
   });
 
+  function placeOrder(){
+    var form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    
+    var orderElem = document.createElement("input");
+    orderElem.setAttribute("name", "order");
+    orderElem.setAttribute("value", JSON.stringify(order));
+    form.appendChild(orderElem);
+
+    form.submit();
+  }
+
   function addCurrentItem(){
+    // add in the options
     var options = document.getElementById("options").getElementsByClassName("option");
     for (var i = 0; i < options.length; i++){
       if (options[i].getElementsByClassName("optionCheck")[0].checked){
         currentItem.options.push($(options[i]).attr("data-moid"));
       }
     }
-    console.log(currentItem);
+    
+    // put in order object
+    order.push(currentItem);
+
+    // show in ui
+    var itemName = $("#optionsTitle").html();
+    $("#trayList").append("<li data-index=" + (order.length - 1) + "<p>" + itemName + "</p></li>");
+
+    // hide dialog
+    $("#optionsDialog").modal("hide");
   }
 
   function menuItemClicked(){
-    currentItem.item = $(this).attr("data-miid");
+    var itemId = $(this).attr("data-miid");
+    /*if (order[itemId]){
+      currentItem = order[itemId];
+
+      //check the option boxes
+      for (var i = 0; i < currentItem.options.length; i++){
+        $("[data-moid]=" + currentItem.options[i]).children(".optionCheck").checked = true;
+      }
+    }else{*/
     currentItem = {
-      item: $(this).attr("data-miid"),
+      id: $(this).attr("data-miid"),
       options: []
     }
 
@@ -39,13 +70,11 @@
     $("#optionsTitle").html($(this).children(".name").html());
     $("#itemDescription").html($(this).children(".menuItemDescription").html());
     console.log();
-    $("#itemPrice").html($(this).children(".priceContainer").children(".price"));
+    $("#itemPrice").html($(this).children(".priceContainer").children(".price").html());
     $("#options").html(options);
 
     // show dialog
-    $("#optionsDialog").modal({
-      show:  true
-    });
+    $("#optionsDialog").modal("show");
     $("#optionsDialog").removeClass("hidden");
   }
 

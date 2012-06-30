@@ -12,5 +12,11 @@
     items: Mixed
   });
 
-  exports.Order = mongoose.model("Order", Order);
+  var Meetup = new Schema({
+    meetup_id: String,
+    rid: Number
+  });
+
+  exports.Order  = mongoose.model("Order", Order);
+  exports.Meetup = mongoose.model("Meetup", Meetup);
 })();
