@@ -8,10 +8,17 @@ var express   = require('express')
   , _         = require("underscore")
   , mongoose  = require("mongoose")
   , schemas   = require("./schemas")
+  , Ordrin    = require("ordrin-api")
   , config = require('nconf').argv().env().file({file:'./config.json'});
 
 var app = module.exports = express.createServer();
 mongoose.connect(config.get("mongo-connection"));
+var ordrin = Ordrin.init({
+  apiKey: config.get("api-key"),
+  restaurantUrl: "r-test.ordr.in",
+  userUrl: "u-test.ordr.in",
+  orderUrl: "o-test.ordr.in"
+});
 
 // Configuration
 
@@ -24,6 +31,7 @@ app.configure(function(){
   app.use(express.session({ secret: 'your secret here' }));
   app.use(function(req, res, next){
     req._schemas = schemas;
+    req._ordrin  = ordrin;
     next();
   });
   app.use(app.router);

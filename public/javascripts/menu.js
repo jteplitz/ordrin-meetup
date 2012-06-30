@@ -9,7 +9,15 @@
     $("[data-listener]=menuItem").click(menuItemClicked);
     $("#addItem").click(addCurrentItem);
     $("#placeOrder").click(placeOrder);
+    $("#pickRestaurant").click(pickRestaurant);
   });
+
+  function pickRestaurant(){
+    var form = document.createElement("form");
+    form.setAttribute("method", "POST");
+
+    form.submit();
+  }
 
   function placeOrder(){
     var form = document.createElement("form");

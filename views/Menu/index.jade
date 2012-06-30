@@ -30,11 +30,16 @@ ul#menuList
                             p #{option.name}
                             span.price #{option.price}
                       .clear
-#tray
-  p Your Order
-  ul#trayList
-  #placeOrder.btn.btn-primary Place Order
-
+if ordering
+  #tray.sidebar
+    p Your Order
+    ul#trayList
+    #placeOrder.btn.btn-primary Place Order
+else
+  .sidebar
+    .well
+      p Looking Good?
+      #pickRestaurant.btn.btn-danger Use Restaurant
 
 #optionsDialog.modal.hidden
   .modal-header
@@ -46,5 +51,6 @@ ul#menuList
     #options
     
   .modal-footer
-    a.btn(data-dismiss="modal") Close
-    a.btn.btn-primary#addItem Add to tray
+    if ordering
+      a.btn(data-dismiss="modal") Close
+      a.btn.btn-primary#addItem Add to tray

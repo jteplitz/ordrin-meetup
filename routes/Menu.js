@@ -4,25 +4,27 @@
      Ordrin = require("ordrin-api"),
      config = require('nconf').argv().env().file({file:'./config.json'});
 
-  var handler, 
-      ordrin = Ordrin.init({
-        apiKey: config.get("api-key"),
-        restaurantUrl: "r-test.ordr.in",
-        userUrl: "u-test.ordr.in",
-        orderUrl: "o-test.ordr.in"
-      })
+  var handler;
 
   handler = function(req, res, next){
-    console.log("called");
-    ordrin.restaurant.getDetails(req.params.rid, function(err, data){
+    var ordrin = req._ordrin;
+    req._schemas.Meetup.findOne({meetup_id: req.params.eid}, function(err, meetup){
       if (err){
-        console.log("fuck", err);
-        next(500, err, data);
-        return;
+        console.log("damn db error", err);
+        return next(500);
       }
-      var params = _.extend({title: data.name}, data);
-      console.log(params);
-      res.render("Menu/index.jade", params);
+      console.log(err,req.params.eid,  meetup);
+
+      ordrin.restaurant.getDetails(meetup.rid, function(err, data){
+        if (err){
+          console.log("fuck", err);
+          next(500, err, data);
+          return;
+        }
+        var params = _.extend({title: data.name, ordering: true}, data);
+        console.log(params);
+        res.render("Menu/index.jade", params);
+      });
     });
   }
 

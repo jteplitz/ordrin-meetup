@@ -422,6 +422,6 @@ input.optionCheck{
   float: left;
   margin-right: 5px;
 }
-#tray{
+.sidebar{
   float: right;
 }

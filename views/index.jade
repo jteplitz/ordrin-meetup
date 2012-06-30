@@ -1,2 +1,16 @@
-h1= title
-p Welcome to #{title}
+// really should make that block
+link(rel="stylesheet", href="/stylesheets/index.css")
+script(type="text/javascript", src="/javascripts/index.js")
+
+img(src="/img/logo_large.png")
+br
+h1 Get food delivered to your Meetup without the hassle of splitting the bill.
+p
+  strong Meetup and Chow Down 
+  | allows you to choose a restaurant that delivers to your Meetup location and lets your guests choose and pay for their own meal through 
+  a(href="https://www.dwolla.com/")Dwolla.
+
+#formWrapper
+  form
+    input#largeForm(type="text", placeholder="Enter your meetup event ID to get started")
+    #formSubmit.btn.btn-large(type="submit") Go!
