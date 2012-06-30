@@ -1,0 +1,15 @@
+// fuck the block
+link(rel="stylesheet", href="/stylesheets/success.css")
+
+h2 Success! Your Meetup will be ordering from #{restaurantName}
+p 
+  | We'll email everyone who RSVPs to 
+  strong
+    a(href="#{event_url}") #{event_name} 
+  | to let them place their order. 
+  br
+  | The cost of their food will automatically get deposited in your Dwolla account.
+  br
+  h3
+    | When you're ready to place the group order 
+    a(href="/placeorder/#{eventId}") click here.
