@@ -29,7 +29,7 @@
       params = {};
 
       if(resp.statusCode > 400) {
-        res.render();
+        next(404);
       } else {
         resp.on('data', function(d) {
           eventInfo = JSON.parse(d);

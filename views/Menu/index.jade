@@ -6,28 +6,35 @@ h1 #{title}
 
 ul#menuList
   each category in menu
+    - console.log(category.name);
     li.menuCategory(data-mgid="#{category.id}")
       .menu-hd
         p.header.itemListName(data-listener="itemListName") #{category.name}
       ul.itemList.menu.main-menu
-        each item in category.children
-          li.mi(data-listener="menuItem", data-miid="#{item.id}")
-            p.name #{item.name}
-            p.priceContainer
-              span.price #{item.price}
-            span.menuItemDescription.hidden #{item.descrip}
-            if item.children
-              ul.optionCategoryList.hidden
-                each optionCategory in item.children
-                  li.optionCategory(data-mogid="#{optionCategory.id}")
-                    span.header #{optionCategory.name}
-                    ul.optionList.menu
-                      each option in optionCategory.children
-                        li.option(data-moid="#{option.id}") 
-                          input.optionCheck(type="checkbox", data-listener="optionCheckbox")
-                          p #{option.name}
-                          span.price #{option.price}
-                    .clear
+        if (category.children)
+          each item in category.children
+            li.mi(data-listener="menuItem", data-miid="#{item.id}")
+              p.name #{item.name}
+              p.priceContainer
+                span.price #{item.price}
+              span.menuItemDescription.hidden #{item.descrip}
+              if item.children
+                ul.optionCategoryList.hidden
+                  each optionCategory in item.children
+                    li.optionCategory(data-mogid="#{optionCategory.id}")
+                      span.header #{optionCategory.name}
+                      ul.optionList.menu
+                        each option in optionCategory.children
+                          li.option(data-moid="#{option.id}") 
+                            input.optionCheck(type="checkbox", data-listener="optionCheckbox")
+                            p #{option.name}
+                            span.price #{option.price}
+                      .clear
+#tray
+  p Your Order
+  ul#trayList
+  #placeOrder.btn.btn-primary Place Order
+
 
 #optionsDialog.modal.hidden
   .modal-header
