@@ -9,7 +9,10 @@
 
   var Order = new Schema({
     meetup_id: String,
-    items: Mixed
+    items: Mixed,
+    itemsString: String,
+    person: String,
+    price: Number
   });
 
   var Meetup = new Schema({
@@ -17,7 +20,8 @@
     name: String,
     event_url: String,
     rid: Number,
-    hostEmail: String
+    hostEmail: String,
+    address: Mixed
   });
 
   exports.Order  = mongoose.model("Order", Order);

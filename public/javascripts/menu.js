@@ -1,7 +1,11 @@
 (function(){
   "use strict";
 
-  var currentItem = {}, order = [];
+  var currentItem = {}, order = {
+    items: [],
+    price: 0,
+    string: ""
+  };
 
   $(document).ready(function(){
     // click listeners
@@ -22,6 +26,8 @@
   function placeOrder(){
     var form = document.createElement("form");
     form.setAttribute("method", "POST");
+
+    order.name = $("#name").val();
     
     var orderElem = document.createElement("input");
     orderElem.setAttribute("name", "order");
@@ -37,16 +43,22 @@
     for (var i = 0; i < options.length; i++){
       if (options[i].getElementsByClassName("optionCheck")[0].checked){
         currentItem.options.push($(options[i]).attr("data-moid"));
+        if (currentItem.price.length > 4){
+          currentItem.price = String(currentItem.price).substring(0, 3);
+        }
         currentItem.price += Number($(options[i]).children("span.price").html());
       }
     }
+
+    order.price  += Number(currentItem.price);
+    order.string += " 1 " + currentItem.name;
     
     // put in order object
-    order.push(currentItem);
+    order.items.push(currentItem);
 
     // show in ui
     var itemName = $("#optionsTitle").html();
-    $("#trayList").append("<li data-index=" + (order.length - 1) + "><p class=\"itemName\">" + itemName + "</p>" + 
+    $("#trayList").append("<li data-index=" + (order.items.length - 1) + "><p class=\"itemName\">" + itemName + "</p>" + 
                           "<span class=\"price\">" + currentItem.price + "</span></li>");
     $("#trayList").append("<div class='clear'></div>");
 
@@ -71,7 +83,8 @@
       id: $(this).attr("data-miid"),
       options: [],
       price: price,
-      quantity: 1
+      quantity: 1,
+      name: $(this).children(".name").html()
     }
 
 

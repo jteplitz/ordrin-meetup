@@ -1,2 +1,27 @@
-h2 Review the order
-#{order}
+link(rel="stylesheet", href="/stylesheets/review.css")
+
+h1 You Guest's Order:
+#foodWrapper
+  table.table.table-striped
+    thead
+      tr
+        th Name
+        th Order
+        th Cost
+    tbody
+      each order in orders
+        tr
+          td #{order.person}
+          td #{order.itemsString}
+          td $#{order.price}
+     tr.total
+      td Total:
+      td
+      td
+        | $#{orderTotal}
+        p.small This amount should be in your Dwolla account.
+
+h2
+  | Ready to place order? 
+  a.btn.btn-success(href="/placeorder/#{eventId}/confirmed", style="color: white;") Do it
+      

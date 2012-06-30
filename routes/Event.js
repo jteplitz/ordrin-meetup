@@ -39,7 +39,8 @@
           // add stuff to session for later. Sorry Felix
           req.session.meetup = {
             name: eventInfo.name,
-            event_url: eventInfo.event_url
+            event_url: eventInfo.event_url,
+            address: eventInfo.venue
           };
 
           var timestamp = (parseInt(eventInfo.time) + parseInt(eventInfo.utc_offset));

@@ -14,11 +14,21 @@
       return _handleGet(req, res, next);
     }
 
+    try{
+      var address= req.session.meetup.address;
+      address = new req._ordrin.Address(address.address_1, address.city, address.state, address.zip,
+                                   String("2345678901"));
+    }catch(e){
+      console.log("address error", e);
+      return next(500);
+    }
+
     var meetup = new req._schemas.Meetup({
       meetup_id : req.params.eid,
       rid       : req.params.rid,
       name      : req.session.meetup.name,
       event_url : req.session.meetup.event_url,
+      address   : address,
       hostEmail : email
     });
     meetup.save(function(err){

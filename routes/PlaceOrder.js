@@ -18,13 +18,18 @@
       }
       console.log(data);
       var params = {
-        order: data[0].order,
-        ordertotal: data[0].orderTotal,
+        orders: data[0].orders,
+        orderTotal: data[0].orderTotal,
         event_name: data[1].name,
         event_url: data[1].url,
+        eventId: req.params.eid,
         header: true,
         title: "Review Order"
       }
+      req.session.eventName = data[1].name;
+      req.session.eventUrl  = data[1].url;
+      req.session.eventAddress = data[1].address;
+  
       res.render("Order/review.jade", params);
     });
   }
@@ -33,53 +38,35 @@
     schemas.Meetup.findOne({meetup_id: eventId}, function(err, meetup){
       var data = {
         name : meetup.name,
-        url  : meetup.event_url
+        url  : meetup.event_url,
+        address: meetup.address
       };
       cb(null, data);
     });
   }
 
   function getOrders(schemas, meetupId, cb){
-      var finalOrder = {}, orderTotal = 0;
     schemas.Order.find({meetup_id: meetupId}, function(err, orders){
-      console.log("got orders", orders);
       if (err){
-        console.log("order db err");
+        console.log("order db error");
         return next(500);
       }
-
+      var orderTotal = 0;
       for (var i = 0; i < orders.length; i++){
         var currentOrder = orders[i].items;
         for (var j = 0; j < currentOrder.length; j++){
           orderTotal += Number(currentOrder[j].price);
-          if (typeof finalOrder[currentOrder[j].id] !== "undefined"){
-            // two people ordered the same thing. Check the options, item by item
-            var items = finalOrder[currentOrder[j].id];
-            for (var h = 0; h < items.length; h++){
-              if (items[h].options.toString() === currentOrder[j].options.toString){
-                // same orer so just bump quantity
-                items[h].quantity += 1;
-                break;
-              }
-            }
-            // no matches so no idenical items. Just push this into the array
-            items.push(currentOrder[j]);
-          }else{
-            console.log("adding to final order", currentOrder[j].id);
-            finalOrder[currentOrder[j].id] = [
-              currentOrder[j]
-            ]
-          }
         }
       }
-      console.log(finalOrder);
-      var params = {
-        order: finalOrder,
-        orderTotal: orderTotal,
+
+      var data = {
+        orders: orders,
+        orderTotal: orderTotal
       };
-      cb(null, params);
+      cb(null, data);
     });
   }
+
 
   _handlePost = function(req, res, next){
     console.log("got post", req.body);

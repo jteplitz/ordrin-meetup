@@ -19,17 +19,11 @@
         return next(500);
       }
 
-      var order = req.session.order;
-      var total = 0;
-      for (var i = 0; i < order.length; i++){
-        total += Number(order[i].price);
-      }
-      req.session.orderTotal = total;
       var params = {
         event_name: meetup.event_name,
         event_url: meetup.event_url,
         header: true,
-        total: total,
+        total: req.session.order.price,
         title: "Order confirmation"
       };
 
@@ -52,7 +46,8 @@
       }
 
       var destinationId = meetup.hostEmail;
-      var amount = req.session.orderTotal;
+      //var amount = req.session.orderTotal; // don't want to go broke
+      var amount  = 0.01;
       var pin = req.body.pin;
       var params = { destinationType : 'Email' };
       console.log("paying", req.session.dwolla_oauth, pin, destinationId, amount, config.get("dwolla-key"));
@@ -66,7 +61,10 @@
         // store their order
         var order = new req._schemas.Order({
           meetup_id: meetup.meetup_id,
-          items    : req.session.order
+          items    : req.session.order.items,
+          person   : req.session.order.name,
+          price    : req.session.order.price,
+          itemsString: req.session.order.string
         });
         order.save(function(err){
           if (err){
