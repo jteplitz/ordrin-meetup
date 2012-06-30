@@ -6,6 +6,7 @@
     menu    : require("./Menu.js"),
     event   : require("./Event.js"),
     dwolla  : require("./Dwolla.js"),
+    setupEvent: require("./SetupEvent"),
     pay     : require("./Pay.js")
   };
 

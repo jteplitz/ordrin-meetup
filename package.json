@@ -11,5 +11,6 @@
     , "nconf": "0.6.0"
     , "mongoose": "2.7.1"
     , "dwolla" : "0.0.7"
+    , "session-mongoose": "0.0.2"
   }
 }

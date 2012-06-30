@@ -9,6 +9,7 @@ var express   = require('express')
   , mongoose  = require("mongoose")
   , schemas   = require("./schemas")
   , Ordrin    = require("ordrin-api")
+  , SessionMongoose = require("session-mongoose")
   , config = require('nconf').argv().env().file({file:'./config.json'});
 
 var app = module.exports = express.createServer();
@@ -19,6 +20,10 @@ var ordrin = Ordrin.init({
   userUrl: "u-test.ordr.in",
   orderUrl: "o-test.ordr.in"
 });
+var mongooseSessionStore = new SessionMongoose({
+  url: config.get("mongo-connection"),
+  interval: 120000 // expiration check worker run interval in millisec (default: 60000)
+});
 
 // Configuration
 
@@ -28,7 +33,10 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: config.get("secret") }));
+  app.use(express.session({ 
+    secret: config.get("secret"),
+    store: mongooseSessionStore
+  }));
   app.use(function(req, res, next){
     req._schemas = schemas;
     req._ordrin  = ordrin;
@@ -59,5 +67,5 @@ _.each(routes.list, function(route){
 
 app.get('/', routes.index);
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
