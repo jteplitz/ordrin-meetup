@@ -16,7 +16,8 @@
     meetup_id: String,
     name: String,
     url: String,
-    rid: Number
+    rid: Number,
+    hostEmail: String
   });
 
   exports.Order  = mongoose.model("Order", Order);

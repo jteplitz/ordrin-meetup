@@ -9,7 +9,7 @@
     $("[data-listener]=menuItem").click(menuItemClicked);
     $("#addItem").click(addCurrentItem);
     $("#placeOrder").click(placeOrder);
-    $("#pickRestaurant").click(pickRestaurant);
+  //  $("#pickRestaurant").click(pickRestaurant);
   });
 
   function pickRestaurant(){

@@ -8,11 +8,18 @@
 
 
   _handlePost   = function(req, res, next){
+    var email = req.body.email;
+
+    if (typeof email === "undefined"){
+      return _handleGet(req, res, next);
+    }
+
     var meetup = new req._schemas.Meetup({
       meetup_id : req.params.eid,
       rid       : req.params.rid,
       name      : req.session.meetup.name,
-      event_url : req.session.meetup.event_url
+      event_url : req.session.meetup.event_url,
+      hostEmail : email
     });
     meetup.save(function(err){
       if (err){

@@ -39,7 +39,10 @@ else
   .sidebar
     .well
       p Looking Good?
-      #pickRestaurant.btn.btn-danger Use Restaurant
+      form(method="POST")
+        input#email(type="text", name="email", placeholder="Your Email")
+        br
+        input#pickRestaurant.btn.btn-danger(type="submit", value="Use Restaurant")
 
 #optionsDialog.modal.hidden
   .modal-header
