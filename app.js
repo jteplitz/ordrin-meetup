@@ -7,9 +7,11 @@ var express   = require('express')
   , routes    = require('./routes')
   , _         = require("underscore")
   , mongoose  = require("mongoose")
-  , schemas   = require("./scehmas");
+  , schemas   = require("./schemas")
+  , config = require('nconf').argv().env().file({file:'./config.json'});
 
 var app = module.exports = express.createServer();
+mongoose.connect(config.get("mongo-connection"));
 
 // Configuration
 
