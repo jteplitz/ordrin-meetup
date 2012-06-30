@@ -1,1 +1,14 @@
+// really need to make a block for stylesheets
+link(rel="stylesheet", href="/stylesheets/menu.css")
+
 h1 #{title}
+
+ul#menuList
+  each category in menu
+    li.menuCategory(data-mgid="#{category.id}")
+      .menu-hd
+        p.header.itemListName(data-listener="itemListName") #{category.name}
+      ul.itemList.menu.main-menu
+        each item in category.children
+          li.mi(data-listener="menuItem", data-miid="#{item.id}")
+            p.name(data-listener="menuItem") #{item.name}

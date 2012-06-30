@@ -1,0 +1,415 @@
+ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+body{
+  font-weight: normal;
+  font-family: "Helvetica";
+  font-size: 15px;
+  padding-left: 10px;
+}
+
+.header{
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.hidden{
+  display: none;
+}
+
+.price{
+  float: right;
+  padding-right: 5px;
+}
+
+#menuList{
+  float: left;
+  width: 66%;
+}
+
+
+.redBorder{
+  border: 1px solid red;
+}
+
+.editError{
+  font-size: 12px;
+  color: red;
+  text-align: center;
+}
+
+#optionSubmit{
+  width: 75px;
+  margin-top: 25px;
+  margin-left: 5px;
+}
+
+#optionContainer{
+  overflow-y: auto;
+  width: 690px;
+  max-height: 500px;
+}
+
+#optionEditContainer{
+  padding-top: 10px;
+  height: 90px;
+}
+
+.deleteContainer{
+  float: right;
+  margin-right: 10px;
+}
+
+.editBox{
+  width: 600px;
+  float: left;
+}
+
+.clear{
+  clear: both;
+}
+
+.optionCategory{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.option{
+  width: 210px;
+  float: left;
+  padding-left: 10px;
+}
+
+
+#optionsDialog h1{
+  text-align: center;
+}
+
+#changesCol{
+  float: left;
+  width: 310px;
+  margin-left: 10px;
+}
+
+#changesContainer{
+  width: 310px;
+  position: inherit;
+  font-size: 12px;
+}
+
+
+#changesContainer.sticky{
+  position: fixed;
+  top: 10px;
+}
+
+#changesList{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+
+#generalChanges{
+  width: 100%;
+}
+
+/* photos */
+.restaurantPhotoLink.buttonRed{
+  width: 180px;
+  margin-bottom: 10px;
+}
+#picturesDialog .popup-box-container{
+  max-height: 590px;
+}
+.imageContainer{
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+  float: left;
+  margin-right: 6px;
+  border: 2px solid white;
+}
+
+.imageContainer.selected{
+  border: 2px solid black;
+}
+
+.scrollerContainer{
+  width: 1000000px;
+  margin-left: 0px;
+}
+
+.scrollerWindow{
+  width: 640px;
+  overflow: hidden;
+  height: 160px;
+  float: left;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 6px;
+}
+
+.imageThumbnail{
+  cursor: pointer;
+}
+
+#largeImage{
+  margin-right: auto;
+  margin-left: auto;
+  height: 350px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.thumbnailArrow{
+  float: left;
+  cursor: pointer;
+  margin-top: 62px;
+}
+
+/* Menu */
+.discount_line_item {
+  background-color: #FAF3AA
+}
+
+.menuItemPictureCount{
+  float: left;
+  margin-right: 6px;
+  width: 14px;
+  height: 14px;
+  background-position: -120px -48px;
+}
+
+.pageTitle .button {
+  margin-top: 12px;
+}
+
+.pageTitle.boxright {
+  margin-bottom: 30px;
+}
+
+/*=== the div that shows the info of the restaurant you selected on the menu page ===*/
+.chosen_restaurant {
+  margin: 30px auto 20px;
+  padding: 10px;
+  background: #f9f8ed;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+}
+.chosen_restaurant h1 {
+  font-weight: bold;
+  font-size: 16px;
+  color: #d2142e;
+  padding-bottom: 5px;
+}
+.chosen_restaurant .name {
+  margin-bottom: 10px;
+}
+.chosen_restaurant .boxright {
+  overflow: visible;
+}
+.chosen_restaurant .name .slim-col {
+  text-align: right;
+  font-weight: bold;
+  font-size: 16px;
+  color: #757469;
+  padding-bottom: 5px;
+  width: 20%;
+}
+.chosen_restaurant .boxright {
+  font-size: 12px;
+}
+.chosen_restaurant .boxright .slim-col {
+  width: 45%;
+}
+.chosen_restaurant .boxright .slim-col li {
+  overflow: hidden;
+}
+.chosen_restaurant .boxright .slim-col li > p {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.chosen_restaurant .boxright .big-col p {
+  margin-bottom: 4px;
+}
+.chosen_restaurant .boxright .big-col .rating {
+  margin-left: 0;
+  //until we pull this data
+  display: none;
+}
+.chosen_restaurant .boxright .big-col .rating .stars {
+  float: none;
+}
+/*======menu styles======*/
+/* menu header*/
+.menu-hd {
+  border-bottom: 1px solid #e6e6dc;
+  padding-bottom: 8px;
+}
+.menu-hd p:first-child, .header {
+  font-weight: bold;
+  font-size: 16px;
+  color: #d2142e;
+  padding-bottom: 5px;
+}
+.menu-hd .desc {
+  font-style: italic;
+  font-size: 11px;
+}
+/* menu items */
+.menu {
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+.menu li p {
+  float: left;
+  width: 78%;
+}
+.menu li p:first-child {
+  width: 78%;
+}
+.main_content .menu li {
+  color: #000;
+}
+.menu li {
+  font-size: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e6e6dc;
+  display: inline-block;
+  width: 47%;
+  overflow: hidden;
+  position: relative;
+}
+
+.menu li:nth-of-type(2n + 1){
+  margin-right: 16px;
+}
+
+.menu>li:first-child + li + li {
+  margin-right: 16px;
+}
+
+.mi > ul {
+  display:none;
+}
+
+.mi{
+  display: block;
+}
+
+.menu li:hover {
+  cursor: pointer;
+  background: #f9f8ed;
+}
+.menu li .price {
+  text-align: right;
+  width: 22%;
+  color: #55544b;
+  position: absolute;
+  bottom: 8px;
+  right: 0;
+}
+
+#dialog_meat .price {
+  bottom: 3px;
+}
+/*popup menu item*/
+.mItem-add-to-tray {
+  font-size: 12px;
+}
+.quantity {
+  overflow: hidden;
+  text-align: right;
+  margin-bottom: 20px;
+}
+.quantity p, .quantity span, .quantity .quantity-amount {
+  display: inline-block;
+  vertical-align: bottom;
+}
+.quantity p {
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 0 10px 5px 0;
+}
+.quantity .quantity-amount {
+  width: 30px;
+}
+.plus {
+  background: url('/images/plus-minus.png') no-repeat 0 0;
+  width: 26px;
+  height: 24px;
+}
+.minus {
+  background: url('/images/plus-minus.png') no-repeat -30px 0;
+  width: 27px;
+  height: 24px;
+}
+.plus:hover {
+  background-position: 0 -25px;
+}
+.minus:hover {
+  background-position: -30px -25px;
+}
+/* popup menu : heading of the menu item pop-up */
+.mItem-add-to-tray .boxright {
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #a7a69b;
+}
+.mItem-add-to-tray h1 {
+  font-weight: bold;
+  font-size: 18px;
+  color: #d2142e;
+}
+.mItem-add-to-tray .menu-hd .boxright .slim-col {
+  font-size: 18px;
+  width: 20%;
+  text-align: right;
+}
+.mItem-add-to-tray .desc {
+  padding-top: 5px;
+}
+.mItem-add-to-tray .menu-hd {
+  border: none;
+  margin-bottom: 15px;
+}
+/*popup menu : additional items styles*/
+.mItem-add-to-tray .menu li {
+  padding: 4px 0;
+  float: left;
+}
+.mItem-add-to-tray .sub-menu-hd {
+  font: bold 14px Arial, sans-serif;
+  border-bottom: 1px solid #e6e6dc;
+  padding-bottom: 3px;
+  margin-top:16px;
+}
+.mItem-add-to-tray .menu label {
+  vertical-align: middle;
+}
+.mItem-add-to-tray .menu input {
+  float: left;
+  margin-right: 5px;
+}
+/* popup menu : special instructions and submit button*/
+.special-inst {
+  margin: 20px 0;
+}
+.special-inst label {
+  font: bold 14px Arial, sans-serif;
+  display: block;
+}
+.special-inst textarea {
+  width: 98%;
+}
+.mItem-add-to-tray .buttonBlack {
+  font: 400 18px 'Paytone One', sans-serif;
+  float: right;
+}
+.mItem-add-to-tray .button:hover {
+  background: #a7a69b;
+}

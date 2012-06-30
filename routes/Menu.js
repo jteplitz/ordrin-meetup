@@ -21,6 +21,7 @@
         return;
       }
       var params = _.extend({title: data.name}, data);
+      console.log(params);
       res.render("Menu/index.jade", params);
     });
   }
