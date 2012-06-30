@@ -418,10 +418,15 @@ body{
 ul.menu{
   font-family: Arial, sans-serif;
 }
+.itemName{
+  float: left;
+}
 input.optionCheck{
   float: left;
   margin-right: 5px;
 }
 .sidebar{
+  margin-left: 10px;
   float: right;
+  width: 30%;
 }

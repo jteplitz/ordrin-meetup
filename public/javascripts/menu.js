@@ -37,6 +37,7 @@
     for (var i = 0; i < options.length; i++){
       if (options[i].getElementsByClassName("optionCheck")[0].checked){
         currentItem.options.push($(options[i]).attr("data-moid"));
+        currentItem.price += Number($(options[i]).children("span.price").html());
       }
     }
     
@@ -45,14 +46,19 @@
 
     // show in ui
     var itemName = $("#optionsTitle").html();
-    $("#trayList").append("<li data-index=" + (order.length - 1) + "<p>" + itemName + "</p></li>");
+    $("#trayList").append("<li data-index=" + (order.length - 1) + "><p class=\"itemName\">" + itemName + "</p>" + 
+                          "<span class=\"price\">" + currentItem.price + "</span></li>");
+    $("#trayList").append("<div class='clear'></div>");
 
+    //unhide tray
+    $("#tray").removeClass("hidden");
     // hide dialog
     $("#optionsDialog").modal("hide");
   }
 
   function menuItemClicked(){
     var itemId = $(this).attr("data-miid");
+    var price  = Number($(this).children(".priceContainer").children(".price").html());
     /*if (order[itemId]){
       currentItem = order[itemId];
 
@@ -63,8 +69,10 @@
     }else{*/
     currentItem = {
       id: $(this).attr("data-miid"),
-      options: []
+      options: [],
+      price: price
     }
+
 
     var options = $(this).children(".optionCategoryList");
     options.removeClass("hidden");
@@ -78,7 +86,7 @@
     $("#optionsTitle").html($(this).children(".name").html());
     $("#itemDescription").html($(this).children(".menuItemDescription").html());
     console.log();
-    $("#itemPrice").html($(this).children(".priceContainer").children(".price").html());
+    $("#itemPrice").html(price);
     $("#options").html(options);
 
     // show dialog

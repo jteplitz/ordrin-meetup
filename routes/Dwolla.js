@@ -49,7 +49,7 @@
           userInfo = JSON.parse(d);
           console.log(userInfo);
           req.session.dwolla_oauth = userInfo.access_token;
-          next(200);
+          res.redirect("/pay");
         });
       }
     });

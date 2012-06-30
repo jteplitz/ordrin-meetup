@@ -11,12 +11,12 @@
   };
 
   var routeList = [
-    ["/",                routes.root,           ["get"]],
-    ["/order/:eid",            routes.menu,           ["get"         ]],
+    ["/",                      routes.root,           ["get"]],
+    ["/order/:eid",            routes.menu,           ["get",  "post"]],
+    ["/pay",                   routes.pay,            ['get',  "post"]],
     ["/menu/:rid/event/:eid",  routes.setupEvent,     ["get",  "post"]],
-    ["/event/:eid",      routes.event,          ["get"]],
-    ["/dwolla",          routes.dwolla,         ["get"]],
-    ["/pay/:eid",        routes.pay,            ["get"]]
+    ["/event/:eid",            routes.event,          ["get"]],
+    ["/dwolla",                routes.dwolla,         ["get"]],
   ];
 
   exports.list = routeList;

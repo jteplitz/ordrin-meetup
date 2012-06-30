@@ -4,27 +4,98 @@
      dwolla = require("dwolla"),
      config = require('nconf').argv().env().file({file:'./config.json'});
 
-  var handler 
+  var handler, _dispatch,
+      _handleGet, _handlePost;
 
-  handler = function(req, res, next){
+  _handleGet  = function(req, res, next){
+    if( !req.session.dwolla_oauth ) {
+      res.redirect("/dwolla");
+      return;
+    }
+
+    req._schemas.Meetup.findOne({meetup_id: req.session.eventId}, function(err, meetup){
+      if (err || meetup === null){
+        console.log("db badness");
+        return next(500);
+      }
+
+      var order = req.session.order;
+      var total = 0;
+      for (var i = 0; i < order.length; i++){
+        total += Number(order[i].price);
+      }
+      req.session.orderTotal = total;
+      var params = {
+        event_name: meetup.event_name,
+        event_url: meetup.event_url,
+        header: true,
+        total: total,
+        title: "Order confirmation"
+      };
+
+      res.render("Pay/confirm", params);
+    });
+  }
+
+  _handlePost = function(req, res, next){
     console.log("Dwolla Pay called");
     if( !req.session.dwolla_oauth ) {
       res.redirect("/dwolla");
       return;
     }
 
-    var destinationId = 'ricky.robinett@gmail.com';
-    var amount = 1;
-    var pin = req.query.pin;
-    var params = { destinationType : 'Email' };
-    dwolla.send(req.session.dwolla_oauth, pin, destinationId, amount, params,  function(err, data){
-      if (err){
-        console.log("fuck", err);
-        next(500, err, data);
-        return;
+    // get the event info
+    req._schemas.Meetup.findOne({meetup_id: req.session.eventId}, function(err, meetup){
+      if (err || meetup === null){
+        console.log('db error', err);
+        return next(500);
       }
-      console.log(data);
+
+      var destinationId = meetup.hostEmail;
+      var amount = req.session.orderTotal;
+      var pin = req.body.pin;
+      var params = { destinationType : 'Email' };
+      console.log("paying", req.session.dwolla_oauth, pin, destinationId, amount, config.get("dwolla-key"));
+      dwolla.send(req.session.dwolla_oauth, pin, destinationId, amount, params,  function(err, data){
+        if (err){
+          console.log("fuck", err, data);
+          /*next(500, err, data);
+          return;*/
+        }
+
+        // store their order
+        var order = new req._schemas.Order({
+          meetup_id: meetup.meetup_id,
+          items    : req.session.order
+        });
+        order.save(function(err){
+          if (err){
+            console.log("db order error");
+            return next(500);
+          }
+          console.log("order saved");
+          var params = {
+            event_name: meetup.name,
+            event_url: meetup.url,
+            title: "Success",
+            header: true
+          };
+          res.render("Pay/success", params);
+          req.session.destroy(); // we're done here
+        });
+        console.log('sent money', data);
+      });
     });
+  }
+
+  _dispatch = {GET: _handleGet, POST: _handlePost};
+
+  handler   = function(req, res, next){
+    if (_dispatch[req.method]){
+      return _dispatch[req.method](req, res, next);
+    }
+
+    next(405);
   }
 
   module.exports = handler;

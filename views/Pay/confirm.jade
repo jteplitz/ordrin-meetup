@@ -1,0 +1,9 @@
+h2 Order Confirmation
+
+p Your Order will cost $#{total}
+
+form(method="POST")
+  label(for="pin") Your Dwolla Pin
+  input(type="password", name="pin")
+  br
+  input.btn.btn-success(type="submit", value="Pay")
