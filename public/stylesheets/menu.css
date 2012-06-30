@@ -413,3 +413,12 @@ body{
 .mItem-add-to-tray .button:hover {
   background: #a7a69b;
 }
+
+/* new stuff */
+ul.menu{
+  font-family: Arial, sans-serif;
+}
+input.optionCheck{
+  float: left;
+  margin-right: 5px;
+}

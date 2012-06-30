@@ -3,9 +3,11 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes  = require('./routes')
-  , _       = require("underscore")
+var express   = require('express')
+  , routes    = require('./routes')
+  , _         = require("underscore")
+  , mongoose  = require("mongoose")
+  , schemas   = require("./scehmas");
 
 var app = module.exports = express.createServer();
 
@@ -18,6 +20,10 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'your secret here' }));
+  app.use(function(req, res, next){
+    req._schemas = schemas;
+    next();
+  });
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
