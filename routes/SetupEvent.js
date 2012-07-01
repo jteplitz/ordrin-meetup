@@ -1,7 +1,8 @@
 (function(){
   "use strict";
 
-  var _ = require("underscore");
+  var _ = require("underscore"),
+      Polling = require("./Polling.js");
   
   var handler, _dispatch,
       _handleGet, _handlePost;
@@ -45,6 +46,7 @@
           restaurantName: req.session.restaurantName,
           header: true
         };
+        Polling.start(req.params.eid);
         res.render("setupEvent/success.jade", params);
       }
     });
