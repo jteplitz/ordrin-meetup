@@ -28,6 +28,7 @@
       rid       : req.params.rid,
       name      : req.session.meetup.name,
       event_url : req.session.meetup.event_url,
+      time      : req.session.time,
       address   : address,
       hostEmail : email
     });

@@ -1,0 +1,39 @@
+link(rel="stylesheet", href="/stylesheets/place.css")
+#formWrapper
+    form.form-horizontal(method="POST")
+        fieldset
+          .control-group
+               label.control-label(for="name") Name on Card
+               .controls
+                   input.input-xlarge(type="text", name="name")
+               label.control-label(for='input01') Card Type
+               .controls
+                 select#input01.input-xlarge(name='card')
+                   option(value='Visa') Visa
+                   option(value='MasterCard') MasterCard
+                   option(value='AMEX') AMEX
+               label.control-label(for='input02') Card Number
+               .controls
+                 input#input02.input-xlarge(type='text', name="number")
+               label.control-label(for='input03') Expiration Date
+               .controls
+                 input#input03.span1.input-xlarge(type='text', name="expiryMonth", placeholder='MM')
+                 input#input03.span1.input-xlarge(type='text', name="expiryYear", placeholder='YY')
+               label.control-label(for='input04') Security Code
+               .controls
+                 input#input04.span1.input-xlarge(type='text', name="cvc")
+               label.control-label(for='input05') Billing Address
+               .controls
+                 input#input05.input-xlarge(type='text', name="addr", value='#{address.addr}')
+                 br
+                 input#input05.span2.input-xlarge(type='text', name="city", value='#{address.city}') 
+                 input#input05.span1.input-xlarge(type='text', name="state", value='#{address.state}')
+                 br
+                 input#input05.span2.input-xlarge(type='text', name="zip", value='#{address.zip}')
+               label.control-label(for='input06') Phone Number
+               .controls
+                 input#input06.input-xlarge(type='text', name="phone")
+                 br
+               .controls
+                 button.btn.btn-large(type='submit') Submit
+

@@ -29,6 +29,9 @@
       req.session.eventName = data[1].name;
       req.session.eventUrl  = data[1].url;
       req.session.eventAddress = data[1].address;
+      req.session.rid          = data[1].rid;
+      req.session.time         = data[1].time;
+      req.session.email        = data[1].email;
   
       res.render("Order/review.jade", params);
     });
@@ -39,7 +42,10 @@
       var data = {
         name : meetup.name,
         url  : meetup.event_url,
-        address: meetup.address
+        address: meetup.address,
+        rid  : meetup.rid,
+        time : meetup.time,
+        email : meetup.hostEmail
       };
       cb(null, data);
     });

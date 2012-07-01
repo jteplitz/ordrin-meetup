@@ -8,8 +8,8 @@
 
   _handleGet = function(req, res, next){
     combineOrders(req._schemas, req.params.eid, function(err, data){
+      req.session.tray = data.order;
       var params = {
-        tray: data.order,
         orderTotal: data.orderTotal,
         event_name: req.session.eventName,
         event_url: req.session.eventUrl,
@@ -77,12 +77,38 @@
       req.session.eventAddress.phone = billingAddress.phone;
     }catch(e){
       console.log("credit card issue", e);
-      next(400);
+      return next(400);
     }
-    console.log(billingAddress, creditCard);
-    
-    var tray = req.body.tray;
 
+    var tray = req.session.tray;
+    console.log("tray", tray);
+    var items = [];
+    for (var item in tray){
+      console.log(item, "item", typeof tray[item]);
+      var options = [];
+      for (var order in tray[item]){
+        var currentItem = tray[item][order];
+        console.log("current item", currentItem);
+        for (var j = 0; j < currentItem.options.length; j++){
+          options.push(currentItem.options[j].id);
+        }
+        item = new req._ordrin.TrayItem(currentItem.id, currentItem.quantity, options);
+        items.push(item);
+      }
+    }
+    var tray = new req._ordrin.Tray(items);
+    console.log(req.session.time);
+    var user = new req._ordrin.UserLogin(req.session.email, false);
+    req._ordrin.order.placeOrder(req.session.rid, tray, 0, req.session.time, req.body.name.split(" ")[0], req.body.name.split(" ")[1],
+                                 req.session.eventAddress, creditCard, user, false, function(err, data){
+                                   console.log("placed order");
+                                   if (err){
+                                     console.log("so close", err);
+                                     return next(500);
+                                   }
+                                   console.log("Fuck yeah", data);
+                                   //response.render("Order/success.jade");
+                                 });
   }
 
   _dispatch  = {GET: _handleGet, POST: _handlePost};

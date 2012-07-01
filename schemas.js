@@ -21,7 +21,8 @@
     event_url: String,
     rid: Number,
     hostEmail: String,
-    address: Mixed
+    address: Mixed,
+    time: Mixed
   });
 
   exports.Order  = mongoose.model("Order", Order);
