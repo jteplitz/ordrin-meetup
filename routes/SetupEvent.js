@@ -46,7 +46,7 @@
           restaurantName: req.session.restaurantName,
           header: true
         };
-        Polling.start(req.params.eid);
+        Polling.addEvent(req.params.eid);
         res.render("setupEvent/success.jade", params);
       }
     });

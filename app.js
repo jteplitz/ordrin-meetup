@@ -9,11 +9,13 @@ var express   = require('express')
   , mongoose  = require("mongoose")
   , schemas   = require("./schemas")
   , Ordrin    = require("ordrin-api")
+  , Polling   = require("./routes/Polling.js")
   , SessionMongoose = require("session-mongoose")
   , config = require('nconf').argv().env().file({file:'./config.json'});
 
 var app = module.exports = express.createServer();
 mongoose.connect(config.get("mongo-connection"));
+Polling.Start();
 var ordrin = Ordrin.init({
   apiKey: config.get("api-key"),
   restaurantUrl: "r-test.ordr.in",

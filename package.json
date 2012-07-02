@@ -13,5 +13,6 @@
     , "dwolla" : "0.0.7"
     , "session-mongoose": "0.0.2"
     , "sendgrid": "0.2.3"
+    , "websocket": "1.0.6"
   }
 }

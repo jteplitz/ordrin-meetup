@@ -26,11 +26,19 @@
       if(resp.statusCode > 400) {
         next(404);
       } else {
+        var data = "";
         resp.on('data', function(d) {
-          eventInfo = JSON.parse(d);
+          data += d;
+        });
+        resp.on("end", function(){
+          try{
+            eventInfo = JSON.parse(data);
+          }catch(e){
+            console.log("error", e, data);
+          }
           params = _.extend({
             title: eventInfo.name, 
-            eventId: eid, 
+            eventId: eventInfo.id, 
             event_name: eventInfo.name,
             event_url: eventInfo.event_url,
             header: true
