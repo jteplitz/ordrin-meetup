@@ -6,6 +6,7 @@
     menu    : require("./Menu.js"),
     event   : require("./Event.js"),
     dwolla  : require("./Dwolla.js"),
+    meetup  : require("./Meetup.js"),
     setupEvent: require("./SetupEvent"),
     pay     : require("./Pay.js"),
     placeOrder : require("./PlaceOrder.js"),
@@ -19,6 +20,7 @@
     ["/menu/:rid/event/:eid",  routes.setupEvent,     ["get",  "post"]],
     ["/event/:eid",            routes.event,          ["get"]],
     ["/dwolla",                routes.dwolla,         ["get"]],
+    ["/meetup",                routes.meetup,         ["get"]],
     ["/placeorder/:eid",       routes.placeOrder,     ["get"]],
     ["/placeorder/:eid/confirmed", routes.placeConfirmedOrder, ["get", "post"]]
   ];
