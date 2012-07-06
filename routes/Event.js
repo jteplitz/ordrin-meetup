@@ -24,6 +24,7 @@
       params = {};
 
       if(resp.statusCode > 400) {
+        console.log(resp.statusCode, resp);
         next(404);
       } else {
         var data = "";
