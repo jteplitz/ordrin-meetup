@@ -1,0 +1,21 @@
+// really need to make a block for stylesheets
+link(rel="stylesheet", href="/stylesheets/index.css")
+link(rel="stylesheet", href="/stylesheets/restaurants.css")
+
+img(src="/img/logo_large.png")
+br
+h1 Get food delivered to your Meetup without the hassle of splitting the bill.
+p
+  strong Meetup and Chow Down 
+  | allows you to choose a restaurant that delivers to your Meetup location and lets your guests choose and pay for their own meal through 
+  a(href="https://www.dwolla.com/") Dwolla.
+
+if events.length > 0
+  h2 Which of your meetups would you like food at?
+  #formWrapper
+    ul#menuList
+      each event in events
+        li
+          a(href="/event/#{event.id}") #{event.name}
+else
+  p Sorry you have to be hosting an event to start the ordering process. Maybe contact the host of one of your events and tell them to use Chow Down?

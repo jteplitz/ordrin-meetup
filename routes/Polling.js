@@ -5,9 +5,11 @@
       _         = require("underscore"),
       websocket = require("websocket").client,
       async     = require("async"),
+      qs        = require("querystring"),
+      oauth     = require("./oauthUtils"),
       config    = require('nconf').argv().env().file({file:'./config.json'});
 
-  var eids = [];
+  var eids = [], schemas;
 
   var host = config.get("server_host");
 
@@ -20,11 +22,13 @@
     ]);
   };
 
-  function getMeetups(schemas, cb){
+  function getMeetups(appSchemas, cb){
+    schemas = appSchemas;
     schemas.Meetup.find({time: {$gt: new Date().getTime()}}, function(err, meetups){
       for (var i = 0; i < meetups.length; i++){
         eids.push(meetups[i].meetup_id);
       }
+      console.log("starting", eids);
       cb();
     });
   }
@@ -42,9 +46,40 @@
           console.log("included");
           if (d.response == "yes"){
             var eventId = d.event.event_id;
+            var memberId = d.member.member_id;
             console.log("somebody rsvpd yes");
-            // awesome email them the link
-            var options = {
+
+            // awesome message them the link
+
+            // make sure we can oauth
+            schemas.Meetup.findOne({meetup_id: d.event.event_id}, function(err, meetup){
+              if (err){
+                console.log("bad meetup id");
+                return;
+              }
+
+              var message = "Hey " + d.member.member_name + ". We're ordring food for " + meetup.name + 
+                            " through Chow Down. If you want to place an order go to " 
+                            + config.get("server_host") + "/order/" + meetup.meetup_id;
+                             
+              
+              if (new Date().getTime() > meetup.host_oauth_expire){
+                // token expired
+                oauth.refreshToken(meetup.host_oauth_refresh, function(err, data){
+                  if (err){
+                    return console.log("error refreshing token", err);
+                  }
+
+                  meetup.host_oauth_token = data.access_token;
+                  meetup.host_refresh_token = data.refresh_token;
+                  meetup.host_oauth_expires = new Date().getTime() + (Number(data.expires) * 1000);
+                  sendMessage(message, data.access_token, memberId);
+                });
+              } else {
+                sendMessage(message, meetup.host_oauth_token, memberId);
+              }
+            });
+            /*var options = {
               host: "api.meetup.com",
               method: "GET",
               port: 443,
@@ -68,8 +103,8 @@
                 var data = JSON.parse(d);
                 console.log("got user, sending email to", data.email);
                 sendgrid.send({
-                  //to: data.email,
-                  to: "jteplitz602@gmail.com",
+                  to: data.email,
+                  //to: "jteplitz602@gmail.com",
                   from: "meetup@ordrin.com",
                   subject: "Do you want food with that?",
                   html: "<p>Order food for your meetup. <a href=\"" + host + "/order/" + eventId + "\">Click here</a></p>"
@@ -82,13 +117,53 @@
                 });
              });
             });
-            meetupReq.end();
+            meetupReq.end();*/
           }
         }
       });
     });
     client.connect("ws://stream.meetup.com/2/rsvps");
     cb();
+  }
+
+  function sendMessage(message, token, memberId){
+    var options = {
+      host: "api.meetup.com",
+      port: 443,
+      method: "POST",
+      path: "/2/message"
+    };
+
+    var data = {
+      member_id: memberId,
+      access_token: token,
+      subject: "We're getting food for the meetup",
+      message: message
+    };
+    data = qs.stringify(data);
+
+    var headers = {
+      "Content-Type"  : "application/x-www-form-urlencoded",
+      "Content-Length": data.length
+    }
+    options.headers = headers;
+
+    
+    var req = https.request(options, function(res){
+      var data = "";
+      res.setEncoding("utf8");
+
+      res.on("data", function(chunk){
+        data += chunk;
+      });
+
+      res.on("end", function(){
+        console.log("message sent", data, res.statusCode);
+      });
+    });
+
+    req.write(data);
+    req.end();
   }
 
   exports.addEvent = function(eid){

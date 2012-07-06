@@ -25,13 +25,16 @@
     }
 
     var meetup = new req._schemas.Meetup({
-      meetup_id : req.params.eid,
-      rid       : req.params.rid,
-      name      : req.session.meetup.name,
-      event_url : req.session.meetup.event_url,
-      time      : req.session.meetup.dateTime,
-      address   : address,
-      hostEmail : email
+      meetup_id         : req.params.eid,
+      rid               : req.params.rid,
+      name              : req.session.meetup.name,
+      event_url         : req.session.meetup.event_url,
+      time              : req.session.meetup.dateTime,
+      host_oauth_token  : req.session.meetup_oauth,
+      host_oauth_refresh: req.session.refresh_token,
+      host_oauth_expires: req.session.meetup_valid,
+      address           : address,
+      hostEmail         : email
     });
     meetup.save(function(err){
       if (err){

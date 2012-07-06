@@ -24,7 +24,10 @@
     rid: Number,
     hostEmail: String,
     address: Mixed,
-    time: Number
+    time: Number,
+    host_oauth_token: String,
+    host_oauth_refresh: String,
+    host_oauth_expire: Number
   });
 
   exports.Order  = mongoose.model("Order", Order);
