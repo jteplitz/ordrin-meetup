@@ -4,8 +4,9 @@ link(rel="stylesheet", href="/stylesheets/restaurants.css")
 p 
  |  Choose from these restaurants that deliver to 
  a(href="#{event_url}") #{event_name} :
+
 #formWrapper
   ul#menuList
     each restaurant in restaurants
       li 
-        <a href="/menu/#{restaurant.id}/event/#{eventId}"> #{restaurant.na} </a>
+        a(href="/menu/#{restaurant.id}/event/#{eventId}") #{restaurant.na}

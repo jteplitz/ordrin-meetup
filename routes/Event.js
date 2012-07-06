@@ -61,9 +61,7 @@
           ordrin.restaurant.getDeliveryList(new Date(dateTime), address, function(err, data) {
             console.log("presenting page", err, data);
             params.restaurants = data;
-            console.log("sending string", params);
-            res.send("A response", 200);
-            //res.render("Event/index.jade", params);
+            res.render("Event/index.jade", params);
           });
         });
       }
