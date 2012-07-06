@@ -24,10 +24,10 @@
       var query = {
         client_id: config.get("meetup_oauth_key"),
         response_type: "code",
-        redirect_uri: config.get("server_host") + "/meetup",
         scope: "messaging"
       }
       query = qs.stringify(query);
+      query += "&redirect_uri=" + config.get("server_host") + "/meetup";
       var login_url = "https://secure.meetup.com/oauth2/authorize?" + query;
       console.log(login_url);
       res.redirect(login_url);
@@ -48,11 +48,11 @@
       client_id: config.get("meetup_oauth_key"),
       client_secret: config.get("meetup_oauth_secret"),
       grant_type: "authorization_code",
-      redirect_uri: config.get("server_host") + "/meetup",
       code: req.query.code
     };
 
     data = qs.stringify(data);
+    data += "&redirect_uri=" + config.get("server_host") + "/meetup";
 
     var headers = {
       "Content-Type"  : "application/x-www-form-urlencoded",
