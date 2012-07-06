@@ -9,6 +9,7 @@
       params;
 
   handler = function(req, res, next){
+    console.log("handling", req.query);
     console.log("Meetup called");
     options = {
         host : "secure.meetup.com",
@@ -23,10 +24,11 @@
     }
 
     if( typeof req.query.code == 'undefined' ) {
+      console.log("redirecting");
       // redirect to login
-      var login_url = "https://secure.meetup.com/oauth2/authorize?client_id="+config.get("meetup_oauth_key")
+     var login_url = "https://secure.meetup.com/oauth2/authorize?client_id="+config.get("meetup_oauth_key")
         + "&response_type=code"
-        + "&redirect_uri=http://" + req.headers.host + "/meetup";
+        + "&redirect_uri=https://" + req.headers.host + "/meetup";
       console.log(login_url);
       res.redirect(login_url);
       res.end();
@@ -38,7 +40,7 @@
     options.path += "?client_id="+config.get("meetup_oauth_key")
       + "&client_secret=" + config.get("meetup_oauth_secret")
       + "&grant_type=authorization_code"
-      + "&redirect_uri=http://" + req.headers.host + "/meetup"
+      + "&redirect_uri=https://" + req.headers.host + "/meetup"
       + "&code=" + req.query.code;
 
     var request = https.request(options, function(resp) {

@@ -15,7 +15,7 @@ var express   = require('express')
 
 var app = module.exports = express.createServer();
 mongoose.connect(config.get("mongo-connection"));
-Polling.Start();
+Polling.Start(schemas);
 var ordrin = Ordrin.init({
   apiKey: config.get("api-key"),
   restaurantUrl: "r-test.ordr.in",
@@ -57,6 +57,7 @@ app.configure('production', function(){
 });
 
 _.each(routes.list, function(route){
+  console.log("routing", route);
   var methods = route[2] || "GET";
 
   methods.forEach(function(method){
@@ -64,10 +65,6 @@ _.each(routes.list, function(route){
     app[method](route[0], params, route[1]);
   });
 });
-
-// Routes
-
-app.get('/', routes.index);
 
 app.listen(process.env.PORT || 3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

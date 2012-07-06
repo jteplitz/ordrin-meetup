@@ -1,10 +1,11 @@
 (function(){
   "use strict";
-  var https  = require("https"),
-      sendgrid = require("sendgrid").SendGrid,
-      _        = require("underscore"),
+  var https     = require("https"),
+      sendgrid  = require("sendgrid").SendGrid,
+      _         = require("underscore"),
       websocket = require("websocket").client,
-      config   = require('nconf').argv().env().file({file:'./config.json'});
+      async     = require("async"),
+      config    = require('nconf').argv().env().file({file:'./config.json'});
 
   var eids = [];
 
@@ -12,7 +13,23 @@
 
   sendgrid = new sendgrid(config.get("sendgrid_user"), config.get("sendgrid_pass"));
   
-  exports.Start = function(){
+  exports.Start = function(schemas){
+    async.parallel([
+      startPolling,
+      function(cb){ getMeetups(schemas, cb) }
+    ]);
+  };
+
+  function getMeetups(schemas, cb){
+    schemas.Meetup.find({time: {$gt: new Date().getTime()}}, function(err, meetups){
+      for (var i = 0; i < meetups.length; i++){
+        eids.push(meetups[i].meetup_id);
+      }
+      cb();
+    });
+  }
+
+  function startPolling(cb){
     console.log("start");
     var client = new websocket();
     client.on("connect", function(connection){
@@ -73,6 +90,7 @@
       });
     });
     client.connect("ws://stream.meetup.com/2/rsvps");
+    cb();
   }
 
   exports.addEvent = function(eid){

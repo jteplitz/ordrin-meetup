@@ -16,13 +16,13 @@
   });
 
   var Meetup = new Schema({
-    meetup_id: String,
+    meetup_id: {type: String, index: {unique: true}},
     name: String,
     event_url: String,
     rid: Number,
     hostEmail: String,
     address: Mixed,
-    time: Mixed
+    time: Number
   });
 
   exports.Order  = mongoose.model("Order", Order);

@@ -99,7 +99,7 @@
     var tray = new req._ordrin.Tray(items);
     console.log(req.session.time);
     var user = new req._ordrin.UserLogin(req.session.email, false);
-    req._ordrin.order.placeOrder(req.session.rid, tray, 0, req.session.time, req.body.name.split(" ")[0], req.body.name.split(" ")[1],
+    req._ordrin.order.placeOrder(req.session.rid, tray, 0, new Date(req.session.time), req.body.name.split(" ")[0], req.body.name.split(" ")[1],
                                  req.session.eventAddress, creditCard, user, false, function(err, data){
                                    console.log("placed order");
                                    if (err){

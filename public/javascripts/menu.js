@@ -58,7 +58,7 @@
 
     // show in ui
     var itemName = $("#optionsTitle").html();
-    $("#trayList").append("<li data-index=" + (order.items.length - 1) + "><p class=\"itemName\">" + itemName + "</p>" + 
+    $("#trayList").append("<li data-index=" + (order.items.length - 1) + "><p class=\"itemName\">" + itemName + " </p>" + 
                           "<span class=\"price\">" + currentItem.price + "</span></li>");
     $("#trayList").append("<div class='clear'></div>");
 
