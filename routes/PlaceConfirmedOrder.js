@@ -107,7 +107,13 @@
                                      return next(500);
                                    }
                                    console.log("Fuck yeah", data);
-                                   response.render("Order/success.jade");
+                                   var params = {
+                                     event_name: req.session.eventName,
+                                     event_url: res.session.eventUrl,
+                                     header: true,
+                                     title: "Success"
+                                   };
+                                   response.render("Order/success.jade", params);
                                  });
   }
 
