@@ -64,9 +64,9 @@
             events: hosting,
             title: "Pick Event"
           };
-          console.log("sending string");
-          res.send("A response", 200);
-          //res.render("Event/pick", params);
+          console.log("sending page");
+          //res.send("A response", 200);
+          res.render("Event/pick", params);
         });
       });
       meetupReq.end();
