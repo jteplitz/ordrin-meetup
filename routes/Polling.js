@@ -138,7 +138,8 @@
       member_id: memberId,
       access_token: token,
       subject: "We're getting food for the meetup",
-      message: message
+      message: message,
+      cc_sender: false
     };
     data = qs.stringify(data);
 

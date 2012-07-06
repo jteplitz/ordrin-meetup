@@ -10,6 +10,7 @@
   _handleGet = function(req, res, next){
     // make sure we're authed
     if (req.session.meetup_valid > new Date().getTime()){
+      console.log("getting events");
       // get the events they're hosting
       // get all events and then filter
       var options = {
@@ -63,6 +64,7 @@
             events: hosting,
             title: "Pick Event"
           };
+          console.log("sending string");
           res.send("A response", 200);
           //res.render("Event/pick", params);
         });

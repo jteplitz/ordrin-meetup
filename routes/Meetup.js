@@ -24,16 +24,18 @@
       var query = {
         client_id: config.get("meetup_oauth_key"),
         response_type: "code",
-        scope: "messaging"
+        scope: "messaging",
+        redirect_uri: config.get("server_host") + "/meetup"
       }
       query = qs.stringify(query);
-      query += "&redirect_uri=" + config.get("server_host") + "/meetup";
+      //query += "&redirect_uri=" + config.get("server_host") + "/meetup";
       var login_url = "https://secure.meetup.com/oauth2/authorize?" + query;
       console.log(login_url);
       res.redirect(login_url);
       res.end();
       return;
     }
+    console.log("getting access token");
 
 
     // get access token
