@@ -37,7 +37,6 @@
         console.log("fuck", err);
       });
       connection.on("message", function(message){
-        console.log("got message");
         var d = JSON.parse(message.utf8Data);
         console.log("got message", eids, d.event.event_id, d.event.event_url);
         if (_.include(eids, d.event.event_id)){
