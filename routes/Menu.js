@@ -42,7 +42,7 @@
     }catch(e){
       if (e){
         console.log("Bad tray");
-        return next(400);
+        res.redirect("/order/" + req.params.eid);
       }
     }
 

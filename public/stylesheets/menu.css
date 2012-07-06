@@ -261,6 +261,17 @@ input.optionCheck{
 #trayList{
   margin-left: 0;
 }
-#trayList .price{
-  margin-left: 10px;
+#trayList .price, #subtotal, #tipBox{
+  margin-right: 20px;
+  float: right;
+}
+#tipBox{
+  width: 50px;
+  text-align: right;
+}
+#name{
+  display: block;
+}
+#tipLabel{
+  float: left;
 }

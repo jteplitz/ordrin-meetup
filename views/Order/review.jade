@@ -13,13 +13,19 @@ h1 You Guest's Order:
         tr
           td #{order.person}
           td #{order.itemsString}
-          td $#{order.price}
+          td $#{order.totalPrice}
+     tr
+      td Delivery Fee
+      td
+      td 
+        | $#{fee}
+        p You are responsible for this
      tr.total
       td Total:
       td
       td
         | $#{orderTotal}
-        p.small This amount should be in your Dwolla account.
+        p.small This amount (minus the delivery fee) should be in your Dwolla account.
 
 h2
   | Ready to place order? 

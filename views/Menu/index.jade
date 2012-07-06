@@ -26,7 +26,8 @@ ul#menuList
                       ul.optionList.menu
                         each option in optionCategory.children
                           li.option(data-moid="#{option.id}") 
-                            input.optionCheck(type="checkbox", data-listener="optionCheckbox")
+                            if ordering
+                              input.optionCheck(type="checkbox", data-listener="optionCheckbox")
                             p #{option.name}
                             span.price #{option.price}
                       .clear
@@ -35,8 +36,14 @@ if ordering
     p Your Order
     ul#trayList
     br 
-    input#name(type="text", name="name", placeholder="Your Name")
+    p
+      | Subtotal
+      span#subtotal 
+    label#tipLabel(for="tip") Tip
+    input#tipBox(type="text", name="tip")
+    .clear
     br
+    input#name(type="text", name="name", placeholder="Your Name")
     #placeOrder.btn.btn-primary Place Order
 else
   .sidebar

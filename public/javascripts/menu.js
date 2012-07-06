@@ -16,6 +16,15 @@
   //  $("#pickRestaurant").click(pickRestaurant);
   });
 
+  // sets subtotal and tip
+  function setSubtotal(percent){
+    $("#subtotal").html(Math.floor(order.price * 100) / 100);
+
+    var tip = order.price * percent;
+    tip     = Math.floor(tip * 100) / 100;
+    $("#tipBox").val(tip);
+  }
+
   function pickRestaurant(){
     var form = document.createElement("form");
     form.setAttribute("method", "POST");
@@ -28,6 +37,7 @@
     form.setAttribute("method", "POST");
 
     order.name = $("#name").val();
+    order.tip  = $("#tipBox").val();
     
     var orderElem = document.createElement("input");
     orderElem.setAttribute("name", "order");
@@ -50,7 +60,7 @@
       }
     }
 
-    order.price  += Number(currentItem.price);
+    order.price  += Math.floor(Number(currentItem.price) * 100) / 100;
     order.string += " 1 " + currentItem.name;
     
     // put in order object
@@ -64,8 +74,11 @@
 
     //unhide tray
     $("#tray").removeClass("hidden");
+    // update subtotal and tip
+    setSubtotal(0.2);
     // hide dialog
     $("#optionsDialog").modal("hide");
+
   }
 
   function menuItemClicked(){

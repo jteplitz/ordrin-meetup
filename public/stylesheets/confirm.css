@@ -1,0 +1,14 @@
+table{
+  width: 280px;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+tr{
+  line-height: 27px;
+}
+
+td.total{
+  font-weight: bold;
+}

@@ -1,6 +1,21 @@
+link(rel="stylesheet", href="/stylesheets/confirm.css")
+
 h2 Order Confirmation
 
-p Your Order will cost $#{total}
+table
+  tbody
+    tr
+      td Subtotal
+      td #{subtotal}
+    tr
+      td Tip
+      td #{tip}
+    tr
+      td Tax
+      td #{tax}
+    tr
+      td Total
+      td.total #{total}
 
 form(method="POST")
   label(for="pin") Your Dwolla Pin

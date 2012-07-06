@@ -19,15 +19,26 @@
         return next(500);
       }
 
-      var params = {
-        event_name: meetup.event_name,
-        event_url: meetup.event_url,
-        header: true,
-        total: req.session.order.price,
-        title: "Order confirmation"
-      };
+      req._ordrin.restaurant.getFee(meetup.rid, req.session.order.price, req.session.order.tip, 
+                         new Date(meetup.time), meetup.address, 
+      function(err, data){
+        var total = Number(req.session.order.price) + Number(req.session.order.tip) + Number(data.tax);
+        total = Math.floor(total * 100) / 100;
+        req.session.order.totalPrice = total;
+        var params = {
+          event_name: meetup.event_name,
+          event_url: meetup.event_url,
+          header: true,
+          subtotal: req.session.order.price,
+          tax:      data.tax,
+          total:    total,
+          tip:      req.session.order.tip,
+          title: "Order confirmation"
+        };
 
-      res.render("Pay/confirm", params);
+        res.render("Pay/confirm", params);
+      });
+
     });
   }
 
@@ -64,6 +75,8 @@
           items    : req.session.order.items,
           person   : req.session.order.name,
           price    : req.session.order.price,
+          tip      : req.session.order.tip,
+          totalPrice: req.session.order.totalPrice,
           itemsString: req.session.order.string
         });
         order.save(function(err){

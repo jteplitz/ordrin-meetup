@@ -12,7 +12,9 @@
     items: Mixed,
     itemsString: String,
     person: String,
-    price: Number
+    price: Number,
+    tip: Number,
+    totalPrice: Number
   });
 
   var Meetup = new Schema({

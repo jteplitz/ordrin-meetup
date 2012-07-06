@@ -16,24 +16,33 @@
         console.log("error", err);
         return next(500);
       }
-      console.log(data);
-      var params = {
-        orders: data[0].orders,
-        orderTotal: data[0].orderTotal,
-        event_name: data[1].name,
-        event_url: data[1].url,
-        eventId: req.params.eid,
-        header: true,
-        title: "Review Order"
-      }
-      req.session.eventName = data[1].name;
-      req.session.eventUrl  = data[1].url;
-      req.session.eventAddress = data[1].address;
-      req.session.rid          = data[1].rid;
-      req.session.time         = data[1].time;
-      req.session.email        = data[1].email;
-  
-      res.render("Order/review.jade", params);
+      // get the delivery fee
+      req._ordrin.restaurant.getFee(data[1].rid, data[0].orderSubtotal, data[0].tip, new Date(data[1].time), data[1].address, function(err, fee){
+        if (err){
+          console.lof("fee problem");
+          return next(500);
+        }
+        data[0].orderTotal += Number(fee.fee);
+        var params = {
+          orders: data[0].orders,
+          orderTotal: Math.floor(data[0].orderTotal * 100) / 100, // money it
+          event_name: data[1].name,
+          event_url: data[1].url,
+          eventId: req.params.eid,
+          fee: fee.fee,
+          header: true,
+          title: "Review Order"
+        }
+        req.session.eventName    = data[1].name;
+        req.session.eventUrl     = data[1].url;
+        req.session.eventAddress = data[1].address;
+        req.session.rid          = data[1].rid;
+        req.session.time         = data[1].time;
+        req.session.email        = data[1].email;
+        req.session.tip          = data[0].tip;
+    
+        res.render("Order/review.jade", params);
+      });
     });
   }
 
@@ -57,17 +66,18 @@
         console.log("order db error");
         return next(500);
       }
-      var orderTotal = 0;
+      var orderTotal = 0, orderSubtotal = 0, orderTip = 0;
       for (var i = 0; i < orders.length; i++){
-        var currentOrder = orders[i].items;
-        for (var j = 0; j < currentOrder.length; j++){
-          orderTotal += Number(currentOrder[j].price);
-        }
+        orderTotal    += Number(orders[i].totalPrice);
+        orderSubtotal += Number(orders[i].price);
+        orderTip      += Number(orders[i].tip);
       }
-
+      console.log("total", orderTotal, orderSubtotal);
       var data = {
         orders: orders,
-        orderTotal: orderTotal
+        orderTotal: orderTotal,
+        orderSubtota: orderSubtotal,
+        orderTip: orderTip
       };
       cb(null, data);
     });
