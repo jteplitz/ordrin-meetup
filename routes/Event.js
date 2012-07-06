@@ -18,7 +18,7 @@
         method : 'GET'
     };
 
-    options.path += eid + "?key=" + config.get("meetup_api_key") + "&sign=true";
+    options.path += eid + "?key=" + config.get("meetup_api_key") + "&sign=true&fields=venue_visibility";
     console.log(options);
     var meetupReq = https.request(options, function(resp) {
       params = {};
@@ -35,8 +35,9 @@
           console.log("all good", data);
           try{
             eventInfo = JSON.parse(data);
+            console.log("parsed");
           }catch(e){
-            console.log("error", e, data);
+            return console.log("error", e, data);
           }
           params = _.extend({
             title: eventInfo.name, 
