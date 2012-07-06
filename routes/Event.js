@@ -63,7 +63,7 @@
             params.restaurants = data;
             console.log("sending string", params);
             res.send("A response", 200);
-            res.render("Event/index.jade", params);
+            //res.render("Event/index.jade", params);
           });
         });
       }
