@@ -38,7 +38,6 @@
       });
       connection.on("message", function(message){
         var d = JSON.parse(message.utf8Data);
-        console.log("got message", eids, d.event.event_id, d.event.event_url);
         if (_.include(eids, d.event.event_id)){
           console.log("included");
           if (d.response == "yes"){
