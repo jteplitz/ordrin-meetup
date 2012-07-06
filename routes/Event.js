@@ -58,7 +58,7 @@
 
           var address = new ordrin.Address(eventInfo.venue.address_1, eventInfo.venue.city, eventInfo.venue.state, eventInfo.venue.zip, '7187533087');
           ordrin.restaurant.getDeliveryList(new Date(dateTime), address, function(err, data) {
-            console.log("presenting page");
+            console.log("presenting page", err, data);
             params.restaurants = data;
             res.render("Event/index.jade", params);
           });
