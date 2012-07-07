@@ -61,15 +61,18 @@
               var message = "Hey " + d.member.member_name + ". We're ordring food for " + meetup.name + 
                             " through Chow Down. If you want to place an order go to " 
                             + config.get("server_host") + "/order/" + meetup.meetup_id + "?name=" 
-                            + encodeUriComponent(d.member.member_name);
+                            + encodeURIComponent(d.member.member_name);
+                            console.log(meetup.host_oauth_expire);
                              
               
               if (new Date().getTime() > meetup.host_oauth_expire){
+                console.log("refreshing access token");
                 // token expired
                 oauth.refreshToken(meetup.host_oauth_refresh, function(err, data){
                   if (err){
                     return console.log("error refreshing token", err);
                   }
+                  console.log("refreshed", err, data);
 
                   meetup.host_oauth_token = data.access_token;
                   meetup.host_refresh_token = data.refresh_token;
