@@ -97,23 +97,24 @@
       }
     }
     var tray = new req._ordrin.Tray(items);
-    console.log(req.session.time);
+    console.log(req.session.time, req.session.tip);
     var user = new req._ordrin.UserLogin(req.session.email, false);
+    console.log("placing order", new Date(req.session.time), req.session.eventAddress);
     req._ordrin.order.placeOrder(req.session.rid, tray, req.session.tip, new Date(req.session.time), req.body.name.split(" ")[0], req.body.name.split(" ")[1],
                                  req.session.eventAddress, creditCard, user, false, function(err, data){
                                    console.log("placed order");
                                    if (err){
                                      console.log("so close", err);
-                                     return next(500);
+                                     //return next(500);
                                    }
                                    console.log("Fuck yeah", data);
                                    var params = {
                                      event_name: req.session.eventName,
-                                     event_url: res.session.eventUrl,
+                                     event_url: req.session.eventUrl,
                                      header: true,
                                      title: "Success"
                                    };
-                                   response.render("Order/success.jade", params);
+                                   res.render("Order/success.jade", params);
                                  });
   }
 

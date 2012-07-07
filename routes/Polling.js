@@ -60,7 +60,8 @@
 
               var message = "Hey " + d.member.member_name + ". We're ordring food for " + meetup.name + 
                             " through Chow Down. If you want to place an order go to " 
-                            + config.get("server_host") + "/order/" + meetup.meetup_id;
+                            + config.get("server_host") + "/order/" + meetup.meetup_id + "?name=" 
+                            + encodeUriComponent(d.member.member_name);
                              
               
               if (new Date().getTime() > meetup.host_oauth_expire){

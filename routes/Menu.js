@@ -29,6 +29,7 @@
           ordering: true,
           event_url: meetup.url,
           event_name: meetup.name,
+          memberName: req.query.name || "",
           header: true
         }, data);
         res.render("Menu/index.jade", params);

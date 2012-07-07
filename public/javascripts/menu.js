@@ -59,6 +59,7 @@
         currentItem.price += Number($(options[i]).children("span.price").html());
       }
     }
+    currentItem.price = Math.floor(currentItem.price * 100) / 100;
 
     order.price  += Math.floor(Number(currentItem.price) * 100) / 100;
     order.string += " 1 " + currentItem.name;

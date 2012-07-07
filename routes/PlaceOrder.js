@@ -39,7 +39,7 @@
         req.session.rid          = data[1].rid;
         req.session.time         = data[1].time;
         req.session.email        = data[1].email;
-        req.session.tip          = data[0].tip;
+        req.session.tip          = data[0].orderTip;
     
         res.render("Order/review.jade", params);
       });
