@@ -66,15 +66,14 @@
                             " through Chow Down. If you want to place an order go to " 
                             + config.get("server_host") + "/order/" + meetup.meetup_id + "?name=" 
                             + encodeURIComponent(d.member.member_name);
-                             
-              
               if (new Date().getTime() > meetup.host_oauth_expire){
-                console.log("refreshing token");
+                console.log("refreshing access token");
                 // token expired
                 oauth.refreshToken(meetup.host_oauth_refresh, function(err, data){
                   if (err){
                     return console.log("error refreshing token", err);
                   }
+                  console.log("refreshed", err, data);
 
                   meetup.host_oauth_token = data.access_token;
                   meetup.host_refresh_token = data.refresh_token;
