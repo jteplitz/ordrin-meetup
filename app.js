@@ -15,6 +15,7 @@ var express   = require('express')
 
 var app = module.exports = express.createServer();
 mongoose.connect(config.get("mongo-connection"));
+console.log("mongo", config.get("mongo-connection"));
 Polling.Start(schemas);
 var ordrin = Ordrin.init({
   apiKey: config.get("api-key"),

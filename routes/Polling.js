@@ -15,26 +15,29 @@
 
   sendgrid = new sendgrid(config.get("sendgrid_user"), config.get("sendgrid_pass"));
   
-  exports.Start = function(schemas){
+  exports.Start = function(appSchemas){
+    schemas = appSchemas;
+    console.log("starting");
     async.parallel([
       startPolling,
       function(cb){ getMeetups(schemas, cb) }
     ]);
   };
 
-  function getMeetups(appSchemas, cb){
-    schemas = appSchemas;
+  function getMeetups(schemas, cb){
+    console.log("getting meetups");
     schemas.Meetup.find({time: {$gt: new Date().getTime()}}, function(err, meetups){
+      console.log("got meetups", err);
       for (var i = 0; i < meetups.length; i++){
         eids.push(meetups[i].meetup_id);
       }
-      console.log("starting", eids);
+      console.log("go", eids);
       cb();
     });
   }
 
   function startPolling(cb){
-    console.log("start");
+    console.log("start polling");
     var client = new websocket();
     client.on("connect", function(connection){
       connection.on("error", function(err){
@@ -53,6 +56,7 @@
 
             // make sure we can oauth
             schemas.Meetup.findOne({meetup_id: d.event.event_id}, function(err, meetup){
+              console.log("got meetup")
               if (err){
                 console.log("bad meetup id");
                 return;
@@ -61,10 +65,11 @@
               var message = "Hey " + d.member.member_name + ". We're ordring food for " + meetup.name + 
                             " through Chow Down. If you want to place an order go to " 
                             + config.get("server_host") + "/order/" + meetup.meetup_id + "?name=" 
-                            + encodeUriComponent(d.member.member_name);
+                            + encodeURIComponent(d.member.member_name);
                              
               
               if (new Date().getTime() > meetup.host_oauth_expire){
+                console.log("refreshing token");
                 // token expired
                 oauth.refreshToken(meetup.host_oauth_refresh, function(err, data){
                   if (err){
